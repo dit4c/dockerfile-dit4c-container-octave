@@ -17,3 +17,5 @@ RUN cd /tmp && \
     make && \
     make install && \
     cd .. && rm -r pstoedit-*
+
+COPY etc /etc

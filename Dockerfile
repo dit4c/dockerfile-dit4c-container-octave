@@ -7,7 +7,7 @@ RUN curl -s -L https://bintray.com/dit4c/el7/rpm > /etc/yum.repos.d/bintray-dit4
 # Install
 # - octave
 # - ghostscript for octave plots
-RUN yum install -y \
+RUN rpm --rebuilddb && fsudo yum install -y \
   octave \
   ghostscript-devel
 

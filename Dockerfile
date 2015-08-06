@@ -22,3 +22,5 @@ RUN cd /tmp && \
 
 RUN LNUM=$(sed -n '/launcher_item_app/=' /etc/tint2/panel.tint2rc | head -1) && \
   sed -i "${LNUM}ilauncher_item_app = /usr/share/applications/www.octave.org-octave.desktop" /etc/tint2/panel.tint2rc
+
+RUN sed -i "s/^Icon=.*/Icon=octave/" /usr/share/applications/www.octave.org-octave.desktop

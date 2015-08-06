@@ -2,6 +2,8 @@
 FROM dit4c/dit4c-container-x11
 MAINTAINER t.dettrick@uq.edu.au
 
+RUN curl -s -L https://bintray.com/dit4c/el7/rpm > /etc/yum.repos.d/bintray-dit4c-el7.repo
+
 # Install
 # - octave
 # - ghostscript for octave plots
@@ -18,4 +20,5 @@ RUN cd /tmp && \
     make install && \
     cd .. && rm -r pstoedit-*
 
-COPY etc /etc
+RUN LNUM=$(sed -n '/launcher_item_app/=' /etc/tint2/panel.tint2rc | head -1) && \
+  sed -i "${LNUM}ilauncher_item_app = /usr/share/applications/www.octave.org-octave.desktop" /etc/tint2/panel.tint2rc

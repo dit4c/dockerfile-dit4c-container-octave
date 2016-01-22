@@ -7,18 +7,20 @@ RUN curl -s -L https://bintray.com/dit4c/el7/rpm > /etc/yum.repos.d/bintray-dit4
 # Install
 # - octave
 # - ghostscript for octave plots
-RUN rpm --rebuilddb && fsudo yum install -y \
+RUN rpm --rebuilddb && yum install -y \
   octave \
   ghostscript-devel
 
 RUN cd /tmp && \
+    yum install -y gcc gcc-c++ && \
     wget "http://downloads.sourceforge.net/project/pstoedit/pstoedit/3.62/pstoedit-3.62.tar.gz" && \
     tar xzvf pstoedit-3.62.tar.gz && \
     cd pstoedit-3.62 && \
     ./configure && \
     make && \
     make install && \
-    cd .. && rm -r pstoedit-*
+    cd .. && rm -r pstoedit-* && \
+    yum remove -y gcc gcc-c++
 
 RUN LNUM=$(sed -n '/launcher_item_app/=' /etc/tint2/panel.tint2rc | head -1) && \
   sed -i "${LNUM}ilauncher_item_app = /usr/share/applications/www.octave.org-octave.desktop" /etc/tint2/panel.tint2rc
